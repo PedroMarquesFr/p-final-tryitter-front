@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 import {
 	Container,
@@ -15,27 +16,16 @@ import {
 } from './styles';
 
 const MenuBar: React.FC = () => {
+	let navigate = useNavigate();
 	return (
 		<Container>
 			<Topside>
 				<Logo />
-				<MenuButton>
+				<MenuButton onClick={() => navigate("/")}>
 					<HomeIcon />
 					<span>PaginaInical</span>
 				</MenuButton>
-				<MenuButton>
-					<BellIcon />
-					<span>Notificacoes</span>
-				</MenuButton>
-				<MenuButton>
-					<EmailIcon />
-					<span>Mensagens</span>
-				</MenuButton>
-				<MenuButton>
-					<FavoriteIcon />
-					<span>Favoritado</span>
-				</MenuButton>
-				<MenuButton className="active">
+				<MenuButton className="active" onClick={() => navigate("/perfil")}>
 					<ProfileIcon />
 					<span>Perfil</span>
 				</MenuButton>
@@ -43,7 +33,7 @@ const MenuBar: React.FC = () => {
 					<span>Tweetar</span>
 				</ButtonA>
 			</Topside>
-			<Avatar />
+			<Avatar onClick={() => navigate("/perfil")} />
 		</Container>
 	);
 };

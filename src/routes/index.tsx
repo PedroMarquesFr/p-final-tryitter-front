@@ -1,16 +1,20 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-
+import Home from "../pages/Home";
+import Perfil from "../pages/Perfil";
 
 function RoutesTryitter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={ <Login/> } />
-        <Route path="/register" element={ <Register/> } />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/perfil/:id" element={ <Perfil/>} />
+
         {/* <Route exact path="/bebidas" component={ Bebidas } /> */}
         {/* <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
@@ -36,7 +40,7 @@ function RoutesTryitter() {
         <Route exact path="/bebidas/:id/in-progress" component={ EmProgresso } />
         <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } /> */}
-        <Route path="*" element={ <NotFound/> } />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

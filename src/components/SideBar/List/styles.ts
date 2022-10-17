@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   background: var(--secondary);
   border-radius: 14px;
+  margin-bottom: 10px;
 `;
 
 export const Item = styled.div`
