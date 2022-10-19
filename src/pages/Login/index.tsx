@@ -22,11 +22,16 @@ const Login: React.FC = () => {
     if (result.status) {
       return enqueueSnackbar(result.data, { variant: "error" });
     }
-    console.log(result);
     context.setUser(result);
     const cookies = new Cookies();
     cookies.set("user", result.user, { path: "/" });
-    cookies.set("token", result.token, { path: "/" });
+
+    const numOfHours = 8;
+    const timeToExpire = numOfHours * 60 * 60 * 1000;
+    cookies.set("token", result.token, {
+      path: "/",
+      expires: new Date(Date.now() + timeToExpire),
+    });
 
     enqueueSnackbar("User Logged In.", { variant: "success" });
 
