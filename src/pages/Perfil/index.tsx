@@ -5,7 +5,7 @@ import MenuBar from "../../components/MenuBar";
 import ProfilePage from "../../components/ProfilePage";
 import SideBar from "../../components/SideBar";
 import UserContext from "../../contextAPI/userContext";
-import { checkIfTokenExists } from "../../service/CookieService";
+import { checkIfTokenExists, getUserCookie } from "../../service/CookieService";
 import { UserEntity } from "../../types";
 
 import {
@@ -17,9 +17,10 @@ import {
 } from "./styles";
 
 const Perfil: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { id } = useParams();
   const context = useContext(UserContext);
+  const userInfo = getUserCookie();
   const [user, setUser] = useState<UserEntity>({
     userId: "",
     login: "",
@@ -32,9 +33,10 @@ const Perfil: React.FC = () => {
     if (!checkIfTokenExists()) {
       navigate("/login");
     }
-    if (context.user.userId === id) {
-      setUser(context.user);
+    if (context.userData.user.userId === id) {
+      setUser(context.userData.user);
     } else {
+      //pegar info da api
     }
   }, []);
   return (
@@ -46,12 +48,12 @@ const Perfil: React.FC = () => {
             <BackIcon />
           </button>
           <ProfileInfo>
-            <strong>Pedro Marques</strong>
+            <strong>{userInfo.nickname}</strong>
             <span>Perfil</span>
           </ProfileInfo>
         </Header>
-        <ProfilePage nickname="Pedro Marques" login="pedromarques1011"/>
-        <Feed />
+        <ProfilePage nickname={userInfo.nickname} login={userInfo.login?.split("@")[0]} />
+        <Feed byUser={true} />
       </PerfilWrapper>
       <SideBar />
     </Container>

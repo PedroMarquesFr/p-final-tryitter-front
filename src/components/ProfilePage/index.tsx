@@ -24,8 +24,8 @@ const ProfilePage: React.FC<profileProps> = ({ nickname, login }) => {
       </Banner>
       <ProfileData>
         <EditButton>Editar perfil</EditButton>
-        <h1>Pedro Marques</h1>
-        <h2>@ppmf</h2>
+        <h1>{nickname}</h1>
+        <h2>@{login}</h2>
 
         <p>Cool tryber student 😆</p>
       </ProfileData>
