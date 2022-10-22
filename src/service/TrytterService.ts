@@ -41,8 +41,7 @@ const loginUser = async (login: UserLogin) => {
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      console.log(error.response);
-      return error.response;
+      return error;
     }
   }
 };
