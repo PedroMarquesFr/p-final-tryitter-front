@@ -6,6 +6,7 @@ import { PostEntity, UserEntity } from "../../types";
 import { Container, Tabs, Tab, Tweets } from "./styles";
 import Tweet from "./Tweet/index";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingBall from "../LoadingBall";
 
 const Feed: React.FC<{ byUser: boolean }> = ({ byUser }) => {
   const { getPostsByUser, userPosts, postsLoading, doesPostsExists, hasMore } =
@@ -32,7 +33,7 @@ const Feed: React.FC<{ byUser: boolean }> = ({ byUser }) => {
         <Tab choosen>Tweets</Tab>
       </Tabs>
 
-      {postsLoading && <span>Loading...</span>}
+      {postsLoading && userPosts.length === 0 && <LoadingBall />}
       {doesPostsExists && (
         <Tweets>
           {userPosts.length === 0 ? (
@@ -42,7 +43,7 @@ const Feed: React.FC<{ byUser: boolean }> = ({ byUser }) => {
               dataLength={userPosts.length}
               next={getPost}
               hasMore={hasMore}
-              loader={<h4>Loading...</h4>}
+              loader={<LoadingBall />}
               // height={400}
               endMessage={
                 <p style={{ textAlign: "center" }}>

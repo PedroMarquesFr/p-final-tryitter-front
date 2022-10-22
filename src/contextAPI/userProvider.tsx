@@ -24,6 +24,9 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [hasMore, setHasMore] = useState(true);
 
   const getPostsByUser = async (userId: string, page: number): Promise<void> => {
+    if(userPosts.length !== 0 && page === 0){
+      return;
+    }
     setPostsLoading(true);
     const result = await getPostsByUserService(userId, page);
     if (result.error) {
