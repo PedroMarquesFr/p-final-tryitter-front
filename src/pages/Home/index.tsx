@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Feed from "../../components/Feed";
 import MenuBar from "../../components/MenuBar";
 import SideBar from "../../components/SideBar";
 import { checkIfTokenExists } from "../../service/CookieService";
@@ -16,7 +17,9 @@ const Home: React.FC = () => {
   return (
     <Container>
       <MenuBar />
-      <Content>Home</Content>
+      <Content>
+        <Feed byUser={false} />
+      </Content>
       <SideBar />
     </Container>
   );

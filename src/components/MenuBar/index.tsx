@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import UserContext from "../../contextAPI/userContext";
+import NewTweet from "../Modal/PostTweet";
 
 import {
   Container,
@@ -38,9 +39,7 @@ const MenuBar: React.FC = () => {
           <ProfileIcon />
           <span>Perfil</span>
         </MenuButton>
-        <ButtonA>
-          <span>Tweetar</span>
-        </ButtonA>
+        <NewTweet/>
       </Topside>
       <Avatar onClick={() => navigate("/perfil")} />
     </Container>

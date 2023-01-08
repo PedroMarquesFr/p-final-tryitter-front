@@ -9,20 +9,30 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingBall from "../LoadingBall";
 
 const Feed: React.FC<{ byUser: boolean }> = ({ byUser }) => {
-  const { getPostsByUser, userPosts, postsLoading, doesPostsExists, hasMore } =
-    useContext(UserContext);
+  const {
+    getPostsByUser,
+    userPosts,
+    homePosts,
+    postsLoading,
+    doesPostsExists,
+    hasMore,
+    getPosts,
+  } = useContext(UserContext);
   const [page, setPage] = useState(0);
+  const posts = byUser ? userPosts : homePosts;
 
   const cookies = new Cookies();
   const user: UserEntity = cookies.get("user");
 
   useEffect(() => {
-    getPost();
+    getRelavitePost();
   }, []);
 
-  const getPost = async () => {
+  const getRelavitePost = async () => {
     if (byUser) {
       await getPostsByUser(user.userId, page);
+    } else {
+      await getPosts(page);
     }
     setPage(page + 1);
   };
@@ -36,12 +46,12 @@ const Feed: React.FC<{ byUser: boolean }> = ({ byUser }) => {
       {postsLoading && userPosts.length === 0 && <LoadingBall />}
       {doesPostsExists && (
         <Tweets>
-          {userPosts.length === 0 ? (
+          {posts.length === 0 ? (
             <span>usuario nao tem posts</span>
           ) : (
             <InfiniteScroll
-              dataLength={userPosts.length}
-              next={getPost}
+              dataLength={posts.length}
+              next={getRelavitePost}
               hasMore={hasMore}
               loader={<LoadingBall />}
               // height={400}
@@ -51,12 +61,16 @@ const Feed: React.FC<{ byUser: boolean }> = ({ byUser }) => {
                 </p>
               }
             >
-              {userPosts.map((post: PostEntity) => (
+              {posts.map((post: PostEntity) => (
                 <Tweet
                   key={post.postId}
                   content={post.content}
-                  login={user.login?.split("@")[0]}
-                  nickname={user.nickname}
+                  login={
+                    byUser
+                      ? user.login?.split("@")[0]
+                      : post.user?.login?.split("@")[0]
+                  }
+                  nickname={byUser ? user.nickname : post.user.nickname}
                   updatedAt={post.updatedAt}
                 />
               ))}

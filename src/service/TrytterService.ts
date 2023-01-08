@@ -53,7 +53,7 @@ const getPostsByUserService = async (
     const cookies = new Cookies();
     const response = await axios({
       method: "get",
-      url: `${process.env.REACT_APP_API_URL}/post/user/${userToken}?page=${page}&take=7`,
+      url: `${process.env.REACT_APP_API_URL}/post/user/${userToken}?page=${page}&take=20`,
       headers: { authorization: `Bearer ${cookies.get("token")}` },
     });
     return response.data;
@@ -65,4 +65,50 @@ const getPostsByUserService = async (
   }
 };
 
-export { registerNewUser, loginUser, getPostsByUserService };
+const getPostsService = async (page: number): Promise<PostEntity[] | any> => {
+  try {
+    const cookies = new Cookies();
+    const response = await axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}/post?page=${page}&take=15`,
+      headers: { authorization: `Bearer ${cookies.get("token")}` },
+    });
+    return response.data;
+  } catch (error: unknown) {
+    console.log("AAAAAA", error);
+    if (error instanceof AxiosError) {
+      return { error };
+    }
+  }
+};
+
+const postTweetService = async (tweetContent: string) => {
+  try {
+    const cookies = new Cookies();
+    const user = cookies.get("user");
+    console.log(user)
+    const response = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/post`,
+      headers: { authorization: `Bearer ${cookies.get("token")}` },
+      data: {
+        content: tweetContent,
+        userId: user.userId,
+      },
+    });
+    return response.data;
+  } catch (error: unknown) {
+    console.log("AAAAAA", error);
+    if (error instanceof AxiosError) {
+      return { error };
+    }
+  }
+};
+
+export {
+  registerNewUser,
+  loginUser,
+  getPostsByUserService,
+  getPostsService,
+  postTweetService,
+};

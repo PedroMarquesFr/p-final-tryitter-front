@@ -1,4 +1,5 @@
 import React from "react";
+import DialogDemo from "../Modal/EditProfile";
 
 import {
   Container,
@@ -23,7 +24,8 @@ const ProfilePage: React.FC<profileProps> = ({ nickname, login }) => {
         <Avatar />
       </Banner>
       <ProfileData>
-        <EditButton>Editar perfil</EditButton>
+        <DialogDemo />
+        {/* <EditButton>Editar perfil</EditButton> */}
         <h1>{nickname}</h1>
         <h2>@{login}</h2>
 
