@@ -16,18 +16,24 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    console.log("a");
     const result = await loginUser(user);
-    console.log(context);
-    if (result.status) {
-      return enqueueSnackbar(result.data, { variant: "error" });
+    if (result.message) {
+      return enqueueSnackbar(
+        result?.response?.data ? result?.response?.data : result.message,
+        { variant: "error" }
+      );
     }
-    console.log(result);
     context.setUser(result);
     const cookies = new Cookies();
     cookies.set("user", result.user, { path: "/" });
-    cookies.set("token", result.token, { path: "/" });
 
+    const numOfHours = 8;
+    const timeToExpire = numOfHours * 60 * 60 * 1000;
+    cookies.set("token", result.token, {
+      path: "/",
+      expires: new Date(Date.now() + timeToExpire),
+    });
+    console.log(context);
     enqueueSnackbar("User Logged In.", { variant: "success" });
 
     navigate("/");
